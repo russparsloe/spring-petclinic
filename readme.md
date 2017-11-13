@@ -8,6 +8,7 @@ I have added the following:
 * Compose for a 'test' environment using HRM
 * Compose for a 'prod' environment using HRM
 * A Jenkinsfile to build and promote images (https://github.com/ollypom/ee-jenkins/) 
+* Container ID served on the welcome page, great for replica deployments in EE.
 
 ## Running petclinic locally
 ```
