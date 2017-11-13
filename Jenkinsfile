@@ -15,18 +15,26 @@ node("docker") {
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
         println commit_id
-         
-        stage "build"
-        sh "docker -D build -t ${dtr_url}/${dtr_repo}:${commit_id} ."
-        
+
+        stage "Tagging"
+        sh " \
+        docker login -u ${DTR_USR} -p ${DTR_PWD} ${dtr_url} && \
+        docker pull ${dtr_url}/${qa_repo}:latest && \
+        docker tag ${dtr_url}/${qa_repo}:latest ${dtr_url}/${prod_repo}:${BUILD_NUMBER}"
+
         stage "publish"
         sh "export NOTARY_DELEGATION_PASSPHRASE=${SIGNING_KEY} && \
-        notary -d ~/.docker/trust key import /home/jenkins/key.pem --role=targets/releases && \
+        notary -d ~/.docker/trust key import /home/jenkins/key.pem --role=targets/qa && \
         notary -d ~/.docker/trust key list"
         
         sh "export DOCKER_CONTENT_TRUST=1 \
         DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=${SIGNING_KEY} && \
         docker login -u ${DTR_USR} -p ${DTR_PWD} ${dtr_url} && \
-        docker push ${dtr_url}/${dtr_repo}:${commit_id}"
+        docker push ${dtr_url}/${prod_repo}:${BUILD_NUMBER}"
+
+        stage "deploy"
+        sh "cd /home/jenkins && \
+        source env.sh && \
+        docker service update --image ${dtr_url}/${prod_repo}:${BUILD_NUMBER} pets-test_petclinic"
     }
 }
