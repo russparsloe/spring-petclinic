@@ -1,17 +1,34 @@
-# Spring PetClinic Sample Application [![Build Status](https://travis-ci.org/spring-projects/spring-petclinic.png?branch=master)](https://travis-ci.org/spring-projects/spring-petclinic/)
+# Docker Demo Spring PetClinic Sample Application 
 
-## Understanding the Spring Petclinic application with a few diagrams
+This application is forked from https://github.com/spring-projects/spring-petclinic.
+
+I have added the following:
+
+* Multi stage build Dockerfile
+* Compose for a 'test' environment using HRM
+* Compose for a 'prod' environment using HRM
+* A Jenkinsfile to build and promote images (https://github.com/ollypom/ee-jenkins/) 
 
 ## Running petclinic locally
 ```
 	git clone https://github.com/spring-projects/spring-petclinic.git
 	cd spring-petclinic
-	./mvnw spring-boot:run
+	docker image build -t grdnrio/pet-testing .
+```
+
+Then run the container:
+
+```
+docker container run --name pets -p 8080:8080 -d grdnrio/pet-testing
 ```
 
 You can then access petclinic here: http://localhost:8080/
 
 <img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
+
+---
+# ORIGINAL APPLICATION DOCS
+## Understanding the Spring Petclinic application with a few diagrams
 
 ## In case you find a bug/suggested improvement for Spring Petclinic
 Our issue tracker is available here: https://github.com/spring-projects/spring-petclinic/issues
