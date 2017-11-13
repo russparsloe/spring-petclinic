@@ -1,6 +1,7 @@
 def dtr_creds = '083117b8-df15-4801-9cab-57e36b4c498a'
 def dtr_url = 'dtr.joeg.dtcntr.net'
-def dtr_repo = 'admin/pet-clinic-test'
+def qa_repo = 'admin/pet-clinic-test'
+def prod_repo = 'admin/pet-clinic-prod'
 
 def git_url = 'https://github.com/grdnrio/ee-jenkins.git'
 def signing_key = '2cb7cdba-107e-4a3e-ba98-931b7066a121'
@@ -32,7 +33,7 @@ node("docker") {
         docker login -u ${DTR_USR} -p ${DTR_PWD} ${dtr_url} && \
         docker push ${dtr_url}/${prod_repo}:${BUILD_NUMBER}"
 
-        stage "deploy"
+        stage "qa-deploy"
         sh "cd /home/jenkins && \
         source env.sh && \
         docker service update --image ${dtr_url}/${prod_repo}:${BUILD_NUMBER} pets-test_petclinic"
