@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  petclinic:
+    image: dtr.joeg.dtcntr.net/mary/pet-clinic:3
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        com.docker.ucp.mesh.http.30021: "external_route=http://test.pets.joeg.dtcntr.net,internal_port=8080"
+    ports: 
+      - 30021:8080
+    networks: 
+      - overlay
+      - default
+
+networks:
+  overlay:
+  default:
+    external:
+      name: 
+        "ucp-hrm"
