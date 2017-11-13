@@ -1,4 +1,4 @@
-def dtr_creds = 'ae438414-d411-4d68-8193-001b6f61c5cb'
+def dtr_creds = '083117b8-df15-4801-9cab-57e36b4c498a'
 def dtr_url = 'dtr.joeg.dtcntr.net'
 def dtr_repo = 'admin/pet-clinic-test'
 
