@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   petclinic:
-    image: dtr.joeg.dtcntr.net/docker-demo/pet-clinic-test:3
+    image: dtr.joeg.dtcntr.net/docker-demo/pet-clinic-test:1
     deploy:
       mode: replicated
       replicas: 1
