@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   petclinic:
-    image: dtr.russp.dtcntr.net/docker/pet-clinic:2
+    image: dtr.russp.dtcntr.net/docker/spring-pets:2
     deploy:
       mode: replicated
       replicas: 3
